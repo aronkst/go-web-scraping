@@ -1,0 +1,8 @@
+.git
+.vscode
+.env
+dockerfile
+LICENSE
+Makefile
+README.md
+TODO
