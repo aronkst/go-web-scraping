@@ -40,19 +40,19 @@ Stop the application:
 make stop
 ```
 
-Example of how to fetch information within a web page using a URL as input.
+Example of how to fetch information within a web page using a URL as input:
 
 ```
 make test-find
 ```
 
-Example of how to fetch for information within a web page using HTML as input.
+Example of how to fetch for information within a web page using HTML as input:
 
 ```
 make test-find-html
 ```
 
-Example of how to get all the HTML from a web page using a URL as input.
+Example of how to get all the HTML from a web page using a URL as input:
 
 ```
 make test-html
