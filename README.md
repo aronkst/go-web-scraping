@@ -16,12 +16,6 @@ If the site you are fetching the data from has JavaScript rendering, use the `ja
 
 # How to use
 
-Builds the Docker application, must be the first command to be executed:
-
-```
-make build
-```
-
 Run the application:
 
 ```
