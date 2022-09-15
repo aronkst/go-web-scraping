@@ -34,6 +34,12 @@ Stop the application:
 make stop
 ```
 
+View logs for Docker containers:
+
+```
+make logs
+```
+
 Example of how to fetch information within a web page using a URL as input:
 
 ```
