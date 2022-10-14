@@ -1,8 +1,4 @@
-FROM golang:1.18-bullseye
-
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends chromium \
-  && apt-get clean
+FROM golang:1.18-alpine AS build
 
 WORKDIR /usr/src/app
 
@@ -27,5 +23,15 @@ COPY web/*.go web
 COPY main.go .
 
 RUN go build -o go-web-scraping main.go
+
+FROM alpine:3.16
+
+RUN apk update \
+    && apk upgrade \
+    && apk add --no-cache chromium
+
+WORKDIR /usr/src/app
+
+COPY --from=build /usr/src/app/go-web-scraping go-web-scraping
 
 CMD [ "./go-web-scraping" ]
