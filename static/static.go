@@ -3,7 +3,7 @@ package static
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -20,7 +20,7 @@ func GetHTML(url string) (string, error) {
 		return "", errors.New(errorMessage)
 	}
 
-	html, err := ioutil.ReadAll(response.Body)
+	html, err := io.ReadAll(response.Body)
 	if err != nil {
 		return "", err
 	}

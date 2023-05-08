@@ -43,6 +43,7 @@ func GetHTML(url string) (string, error) {
 				if exp != nil {
 					return exp
 				}
+
 				return nil
 			}),
 		chromedp.WaitVisible(`#show_wait_ready`),

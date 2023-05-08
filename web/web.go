@@ -2,7 +2,7 @@ package web
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/aronkst/go-web-scraping/data"
@@ -10,33 +10,43 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-func HandlerHTML(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	body, err := getBody(r)
+func HandlerHTML(writer http.ResponseWriter, request *http.Request, _ httprouter.Params) {
+	body, err := getBody(request)
 	if err != nil {
-		httpError(w, err)
+		httpError(writer, err)
+
 		return
 	}
 
 	html, err := find.GetHTML(body)
 	if err != nil {
-		httpError(w, err)
+		httpError(writer, err)
+
 		return
 	}
 
 	output := data.OutputHTML{HTML: html}
 	outputBody, err := json.Marshal(output)
+
 	if err != nil {
-		httpError(w, err)
+		httpError(writer, err)
+
 		return
 	}
 
-	w.Write(outputBody)
+	_, err = writer.Write(outputBody)
+	if err != nil {
+		httpError(writer, err)
+
+		return
+	}
 }
 
-func HandlerFind(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	body, err := getBody(r)
+func HandlerFind(writer http.ResponseWriter, request *http.Request, _ httprouter.Params) {
+	body, err := getBody(request)
 	if err != nil {
-		httpError(w, err)
+		httpError(writer, err)
+
 		return
 	}
 
@@ -84,7 +94,8 @@ func HandlerFind(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	if len(allFind) >= 1 || len(allFindList) >= 1 {
 		value, valueList, err := find.GetValues(body, allFind, allFindList)
 		if err != nil {
-			httpError(w, err)
+			httpError(writer, err)
+
 			return
 		}
 
@@ -99,22 +110,30 @@ func HandlerFind(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
 	output := data.OutputFind{Find: resultValue}
 	outputBody, err := json.Marshal(output)
+
 	if err != nil {
-		httpError(w, err)
+		httpError(writer, err)
+
 		return
 	}
 
-	w.Write(outputBody)
+	_, err = writer.Write(outputBody)
+	if err != nil {
+		httpError(writer, err)
+
+		return
+	}
 }
 
-func getBody(r *http.Request) (data.Body, error) {
-	rBody, err := ioutil.ReadAll(r.Body)
+func getBody(request *http.Request) (data.Body, error) {
+	rBody, err := io.ReadAll(request.Body)
 	if err != nil {
 		return data.Body{}, err
 	}
 
 	body := data.Body{}
 	err = json.Unmarshal(rBody, &body)
+
 	if err != nil {
 		return data.Body{}, err
 	}
@@ -122,6 +141,6 @@ func getBody(r *http.Request) (data.Body, error) {
 	return body, nil
 }
 
-func httpError(w http.ResponseWriter, err error) {
-	http.Error(w, err.Error(), http.StatusInternalServerError)
+func httpError(writer http.ResponseWriter, err error) {
+	http.Error(writer, err.Error(), http.StatusInternalServerError)
 }

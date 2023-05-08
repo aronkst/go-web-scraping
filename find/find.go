@@ -12,9 +12,9 @@ func GetHTML(body data.Body) (string, error) {
 	var err error
 
 	if body.Javascript {
-		html, err = javascript.GetHTML(body.Url)
+		html, err = javascript.GetHTML(body.URL)
 	} else {
-		html, err = static.GetHTML(body.Url)
+		html, err = static.GetHTML(body.URL)
 	}
 
 	if err != nil {
