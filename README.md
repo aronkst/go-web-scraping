@@ -1,14 +1,12 @@
 # Go Web Scraping
 
-This is a simple web scraping developed using the Go programming language that has the possibility to fetch information from websites rendered via JavaScript.
+This open-source project offers a straightforward web scraping solution developed in the Go programming language. It is designed to fetch information from websites, including those rendered with JavaScript.
 
-Its execution is done using Docker, where Chromium it's installed inside the container, which can be used to render the page, or not, and use the traditional way that takes the HTML of the page with a simple request.
+The project utilizes Docker for execution, with Chromium installed inside the container. This setup allows you to render web pages using Chromium or opt for the traditional method of fetching HTML through simple HTTP requests.
 
-Searching for site information can be passed easily via `body`, in a POST request.
+Information retrieval from websites is facilitated by sending a POST request with the desired parameters in the `body`. Additionally, you can obtain the complete HTML of a page by making a request to a specific endpoint.
 
-There is also a way to return all the HTML from a page by making a request to a specific path.
-
-To know more details, there is the Makefile file with the commands necessary for its execution and example of how to use, including `curl` commands.
+For detailed instructions on execution and usage, refer to the Makefile included in the project. The Makefile contains all necessary commands, along with examples and `curl` commands for practical application.
 
 # JavaScript Render
 
